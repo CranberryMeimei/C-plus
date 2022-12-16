@@ -1,0 +1,30 @@
+
+#include<stdio.h>
+
+//定义复数抽象类型
+typedef struct{
+    float realpart; //实部
+    float imagepart; //虚部
+}Complex;
+
+//构造一个复数
+void creat(Complex &A,float x,float y){
+    A.realpart=x;
+    A.imagepart=y;
+}
+//两个复数相加
+void add(Complex &C,Complex A, Complex B){
+    C.realpart=A.realpart+B.realpart;
+    C.imagepart=A.imagepart+B.imagepart;
+}
+
+int main(){
+    Complex c1,c2,c3; //定义三个复数变量
+    creat(c1,2.6,3.3);
+    creat(c2,5.4,6.2);
+    add(c3,c1,c2);
+    printf("c1.realpart:%f c1.imagepart%f\n",c1.realpart,c1.imagepart);
+    printf("c2.realpart:%f c2.imagepart%f\n",c2.realpart,c2.imagepart);
+    printf("c3.realpart:%f c3.imagepart%f\n",c3.realpart,c3.imagepart); 
+    return 0;
+}

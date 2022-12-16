@@ -1,0 +1,49 @@
+#include<stdio.h>
+struct fushu{
+	float realpart;//实部 
+	float imagpart;//虚部 
+};                              //定义复数抽象类型 
+
+void assign(struct fushuf *p,float real,float imag);//构造一个复数 
+void add(struct fushu *p,struct fushu A,struct fushu B);//两个复数相加 
+/*
+void add(Complex *A,float real,float imag);//A+B  
+void minus(Complex *A,float real,float imag);//A-B
+void multiply(Complex *A,float real,float imag);//A*B 
+void divide(Complex *A,float real,float imag);//A/B
+*/
+void assign(struct fushu *p,float real,float imag)//构造一个复数 
+{
+	p->realpart=real;//实部赋值 
+	p->imagpart=imag;//虚部赋值 
+}
+
+void add(struct fushu *p,struct fushu A,struct fushu B)//两个复数相加 
+{
+	p->realpart=A.realpart+B.realpart;//实部相加 
+	p->imagpart=A.imagpart+B.imagpart;//虚部相加 
+}/*
+注：Complex是我们定义的一个结构体类型
+带*：指针变量，它是指向Complex类型的指针                                                                                                                                                                            
+不带*：Complex类型的普通变量 
+*/
+
+/*
+举例：
+z=（8+6i）(4+3i)/(8+6i)+(4+3i) 
+*/
+int main()	
+{
+	struct fushu c1,c2,c3;
+
+	assign(&c1,2.6,3.3);
+	assign(&c2,5.4,6.2);	
+
+	add(&c3,c1,c2);
+	
+	printf("c1.realpart:%f c1.imagpart:%f\n",c1.realpart,c1.imagpart);
+    printf("c2.realpart:%f c2.imagpart:%f\n",c2.realpart,c2.imagpart);
+    printf("c3.realpart:%f c3.imagpart:%f\n",c3.realpart,c3.imagpart); 
+    return 0;
+	  
+}
