@@ -2,7 +2,7 @@
 #include<stdio.h>
 
 //定义复数抽象类型
-typedef struct{
+typedef struct{      //关键字？？？
     float realpart; //实部
     float imagepart; //虚部
 }Complex;
