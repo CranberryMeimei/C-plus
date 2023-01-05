@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<stdlib.h>	
+typedef struct {
+	int *elem;
+	int length;
+}SqList;
+void InitList_Sq(SqList *L,int n,char a);
+void Create_Sq(SqList La,SqList Lb,SqList *Lc);
+int main()
+{
+	SqList La,Lb,Lc;
+	char a,b;
+	int flag=1,i,m,n; 
+	
+	printf("输入多项式a与b的系数的个数：\n") ;
+	scanf("%d%d",&m,&n); 
+	
+	InitList_Sq(&La,m,'a');
+	InitList_Sq(&Lb,n,'b');
+	Create_Sq(La,Lb,&Lc);
+	
+	printf("两个多项式相加的结果为：\n");
+	for(i=0;i<Lc.length;i++)
+	{
+		if(flag&&Lc.elem[i]!=0)
+		{
+			printf("%d",Lc.elem[i]);
+			flag=0;
+		}
+		else if(Lc.elem[i]!=0&&i==1)//指数等于1 
+		{
+			if(Lc.elem[i]!=1)
+			{//系数为2
+				if(Lc.elem[i]>0)
+				printf("+%dx",Lc.elem[i],i);
+				else 
+				printf("%dx",Lc.elem[i],i);
+			    
+			}
+			if(Lc.elem[i]==1)
+			{//系数为1
+				if(Lc.elem[i]>0)
+				printf("+x%d",Lc.elem[i],i);
+				else 
+				printf("x%d",Lc.elem[i],i);
+			}
+	    } 
+		else if(Lc.elem[i]!=0&&i>1)//指数大于1 
+		{
+			if(Lc.elem[i]!=1)
+			{//系数为2
+				if(Lc.elem[i]>0)
+				printf("+%dx%d",Lc.elem[i],i);
+				else 
+				printf("%dx%d",Lc.elem[i],i);
+			    
+			}
+			if(Lc.elem[i]==1)
+			{//系数为1
+				if(Lc.elem[i]>0)
+				printf("+x%d",Lc.elem[i],i);
+				else 
+				printf("x%d",Lc.elem[i],i);
+			    
+			}
+	    } 
+    }
+}
+void InitList_Sq(SqList *L,int n,char a)//创建链表a，b 
+{
+	int i;
+	L->elem=(int *)malloc(10*sizeof(int));
+	if(!L->elem) exit(-1);
+	L->length=n; 
+	printf("请输入多项式%c的各项系数:\n",a);
+    for(i=0;i<n;i++)
+    {
+    	scanf("%d",&L->elem[i]);
+	}
+}
+void Create_Sq(SqList La,SqList Lb,SqList *Lc)//创建链表c 
+{
+	int i=0;
+	
+	Lc->elem=(int *)malloc(20*sizeof(int));
+	while(i!=La.length&&i!=Lb.length)
+	{
+		Lc->elem[i]=La.elem[i]+Lb.elem[i];
+		i++;
+    } 
+    if(La.length>Lb.length)
+	{
+		Lc->length=La.length;
+		while(i<Lc->length)
+		{
+			Lc->elem[i]=La.elem[i];
+			i++;
+		}
+	}
+	else   if(La.length<Lb.length)
+	{	
+		Lc->length=Lb.length;
+			while(i<Lc->length)
+		{
+			Lc->elem[i]=Lb.elem[i];
+			i++;
+		}
+	}
+} 
