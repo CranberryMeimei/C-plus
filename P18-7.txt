@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef  struct LNode
+{
+	int data;
+	struct LNode  *next;
+}LNode,*LinkList;
+LinkList Createlist(int n);
+LinkList Inverse(LNode *L);
+void Printlist(LNode *Lc);
+int main()
+{
+	int a,b;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	Inverse(La);
+	Printlist(La);
+}
+
+//前插法 创建单链表
+LinkList Inverse(LNode *L)
+{
+	LinkList p=L->next;//首元结点的地址 
+	L->next=NULL;//头结点的指针域 
+	while(p)
+	{	LinkList q=p->next;
+	 
+		p->next=L->next;
+		L->next=p;
+		
+		p=q;
+	}
+}
+//后插法 创建单链表
+LinkList Createlist(int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;//
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		scanf("%d",&p->data);
+		p->next=NULL;
+		
+		r->next=p;
+		r=p;
+	}
+	return L;
+}
+//打印
+void Printlist(LNode *Lc)
+{
+	LinkList pc=Lc->next;
+	while(pc)
+	{
+		printf("%d ",pc->data);
+		pc=pc->next;
+	}
+} 

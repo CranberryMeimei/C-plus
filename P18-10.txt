@@ -1,0 +1,127 @@
+//
+#include<stdio.h>
+#include<stdlib.h>
+#define n 20
+typedef struct 
+{
+	int *data;
+	int length;
+}SqList;
+SqList Createlist(int t);
+SqList Deleteitem(SqList L,int item);
+void Printlist(SqList L);
+int main()
+{
+	int a;
+	int item;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	SqList La=Createlist(a);
+	printf("删除的item：");
+	scanf("%d",&item) ;
+	 La=Deleteitem(La,item);
+	Printlist(La);
+}
+//创建顺序表 
+SqList Createlist(int t)
+{
+	SqList L;
+	int i;
+	L.data=(int *)malloc(n*sizeof(int));
+	for(i=0;i<t;i++)
+	{
+		scanf("%d",&L.data[i]);
+	}
+	L.length=t;
+	return L;
+}
+//删除所有的item
+SqList Deleteitem(SqList L,int item)
+{
+	int k=0,i;
+	for(i=0;i<L.length;i++)
+	{
+		if(L.data[i]!=item)
+		{
+			L.data[k]=L.data[i];
+			k++;
+		}
+	}
+	L.length=k;
+	return L;
+} 
+//打印
+void Printlist(SqList L)
+{
+	int i;
+	for(i=0;i<L.length;i++)
+	{
+		printf("%d ",L.data[i]);
+	}
+} 
+//字符型
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define n 20
+typedef struct 
+{
+	char data[n];
+	int length;
+}SqList;
+SqList Createlist(int t);
+SqList Deleteitem(SqList L,char item);
+void Printlist(SqList L);
+int main()
+{
+	int a;
+	char item;//
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	SqList La=Createlist(a);
+	printf("删除的item：");
+	scanf(" %c",&item);//用scanf()输入单个字符时的注意点[空格]
+	La=Deleteitem(La,item);
+	Printlist(La);
+}
+//创建链表 
+SqList Createlist(int t)
+{
+	SqList L;
+	int i;
+//	L.data=(char *)malloc(n*sizeof(char));
+	for(i=0;i<t;i++)
+	{
+		scanf(" %c",&L.data[i]);//用scanf()输入单个字符时的注意点[空格]
+	}
+//	scanf("%s",L.data);
+	L.length=t;
+	return L;
+}
+//删除所有的item
+SqList Deleteitem(SqList L,char item)
+{
+	int k=0,i;
+	for(i=0;i<L.length;i++)
+	{
+		if(L.data[i]!=item)
+		{
+			L.data[k]=L.data[i];
+			k++;
+		}
+	}
+	L.length=k;
+	return L;
+} 
+//打印
+void Printlist(SqList L)
+{
+	int i;
+	for(i=0;i<L.length;i++)
+	{
+		printf("%c ",L.data[i]);
+	}
+}
+

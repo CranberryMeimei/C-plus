@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct DuLNode
+{
+	int data;
+	struct DuLNode *prior;
+	struct DuLNode *next;
+}DuLNode,*DuLinkList;
+void Exchange (DuLinkList p);
+DuLinkList Createlist (int n);
+DuLinkList getDuLNode(int n,DuLinkList La);
+void Printlist(DuLNode *L);
+int main()
+{
+	int a,n;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	DuLinkList La=Createlist(a);
+	printf("获取的元素序号："); 
+	scanf("%d",&n);
+	DuLinkList p=getDuLNode(n,La);
+	Exchange (p) ;
+	Printlist(La);
+}
+void Exchange (DuLinkList p) 
+{
+	DuLinkList q=p->prior;
+	q->prior->next=p;
+	p->prior=q->prior;
+	q->next=p->next;
+	q->prior=p;
+	p->next->prior=q;
+	p->next=q;
+}
+// 创建双向链表
+DuLinkList Createlist (int n)
+{
+
+//后插法插入数据元素
+
+	DuLinkList r, p;
+
+	DuLinkList L = (DuLinkList)malloc(sizeof(DuLNode));
+	L->next = NULL;//先建立一个带头结点的空链表
+	r = L;
+	for (int i = 0; i < n; i++)
+	{
+		p = (DuLinkList)malloc(sizeof(DuLNode));
+		scanf("%d",&p->data);
+		p->next = NULL;
+		r->next = p;
+		p->prior = r;
+		r = p;
+	}
+	return L;
+}
+	
+ DuLinkList getDuLNode(int n,DuLinkList La)
+ {
+ 	DuLinkList p=La->next;
+ 	int i=1;
+ 	while(n>i)
+ 	{
+ 		p=p->next;
+ 		i++;
+	}
+	return p;
+ }
+//打印
+
+void Printlist(DuLinkList L)//输出双向链表
+{
+	DuLNode *p;
+	p = L->next;
+	if (p == NULL)
+	printf("空链表！\n");
+	while (p != NULL)
+	{
+	printf("%d  ", p->data);
+	p = p->next;
+	}
+
+}

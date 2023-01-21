@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef  struct LNode
+{
+	int data;
+	struct LNode  *next;
+}LNode,*Linklist;
+Linklist Createlist(int n);
+Linklist  Mergelist(LNode *La,LNode *Lb);
+void Printlist(LNode *Lc);
+int main()
+{
+	int a,b;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	Linklist La=Createlist(a);
+	printf("请输入链表b的数据个数:");
+	scanf("%d",&b);
+	printf("请输入链表b的数据："); 
+	Linklist Lb=Createlist(b);
+	
+	Linklist Lc=Mergelist(La,Lb);
+	printf("合并后：\n");
+	Printlist(Lc);
+}
+
+//后插法 创建单链表a,b
+Linklist Createlist(int n)
+{
+	Linklist L=(Linklist)malloc(sizeof(LNode));
+	L->next=NULL;
+	Linklist r=L;//
+	int i;
+	for(i=0;i<n;i++)
+	{
+		Linklist p=(Linklist)malloc(sizeof(LNode));
+		scanf("%d",&p->data);
+		p->next=NULL;
+		
+		r->next=p;
+		r=p;
+	}
+	return L;
+}
+//合并链表a，b使成为链表c 
+Linklist  Mergelist(LNode *La,LNode *Lb)
+{
+	Linklist Lc,pc;
+	Linklist pa=La->next;
+	Linklist pb=Lb->next;
+	Lc=pc=La;
+	
+	while(pa&&pb)//两个链表均未到达表尾 
+	{
+		if(pa->data>pb->data)
+		{
+			pc->next=pb;
+			pb=pb->next;
+			pc=pc->next;
+		}
+		else if(pa->data<pb->data)
+		{
+			pc->next=pa;
+			pa=pa->next;
+			pc=pc->next;	
+		} else
+		{
+			pc->next=pa;
+			pa=pa->next;
+			pb=pb->next;//有另解 
+			pc=pc->next;
+			
+		}
+	}
+	pc->next=pa?pa:pb;
+	free(Lb);
+	return Lc; 
+}
+//打印
+void Printlist(LNode *Lc)
+{
+	Linklist pc=Lc->next;
+	while(pc)
+	{
+		printf("%d ",pc->data);
+		pc=pc->next;
+	}
+} 

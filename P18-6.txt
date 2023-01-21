@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h> 
+typedef struct LNode
+{
+	int data;
+    struct LNode *next; 
+}LNode,*LinkList;
+
+LinkList Createlist (int n);
+  int Max(LNode *L);
+ 
+int main()
+{
+	int a,max;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	max=Max(La);
+	printf("%d",max);
+} 
+//后插法 创建链表（集合）
+LinkList Createlist (int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		p->next=NULL;
+		scanf("%d",&p->data);
+		
+		r->next=p;
+		r=p;		
+	}
+	return L; 
+ }
+ int Max(LNode *L)
+{
+	LinkList r=L->next;
+ 	int tmax=r->data;
+ 	r=r->next;
+ 	
+ 	while(r)
+ 	{
+ 		if(r->data>tmax)
+		 {
+			tmax=r->data;	 	
+		 }	
+		 r=r->next;
+	}
+	return tmax;
+} 

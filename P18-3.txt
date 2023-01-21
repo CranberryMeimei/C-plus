@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h> 
+typedef struct LNode
+{
+	int data;
+    struct LNode *next; 
+}LNode,*LinkList;
+
+LinkList Createlist (int n);
+ LinkList Intersection (LNode *La,LNode *Lb);
+ void Printlist(LNode *Lc);
+ 
+ 
+int main()
+{
+	int a,b;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	printf("请输入链表b的数据个数:");
+	scanf("%d",&b);
+	printf("请输入链表b的数据："); 
+	LinkList Lb=Createlist(b);
+	
+	LinkList Lc=Intersection(La,Lb);
+	printf("求交集：\n");
+	Printlist(Lc);	
+} 
+//后插法 创建链表（集合）
+LinkList Createlist (int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		p->next=NULL;
+		scanf("%d",&p->data);
+		
+		r->next=p;
+		r=p;		
+	}
+	return L; 
+ } 
+ //求交集
+ LinkList Intersection (LNode *La,LNode *Lb)
+ {
+ 	LinkList Lc,pc;
+ 	LinkList pa=La->next;
+ 	LinkList pb=Lb->next;
+ 	Lc=pc=La;
+ 	while(pa&&pb)
+ 	{
+ 		if(pa->data==pb->data)
+ 		{
+ 			pc->next=pa;
+ 			pc=pc->next;
+ 			pa=pa->next;
+ 			pb=pb->next;//
+		 }
+		 else if(pa->data<pb->data)
+		 {
+		 	pa=pa->next;
+		 	
+		 }else
+		 {
+		 	pb=pb->next;
+		 }
+	 }
+	 while(pa)
+	 {
+	 	LinkList u=pa;
+	 	pa=pa->next;
+	 	free(u);
+	 }
+	 	 while(pb)
+	 {
+	 	LinkList u=pb;
+	 	pb=pb->next;
+	 	free(u);
+	 }
+	 pc->next=NULL;
+	free(Lb);
+	 return Lc;
+  } 
+  //打印
+void Printlist(LNode *Lc)
+{
+	LinkList pc=Lc->next;
+	while(pc)
+	{
+		printf("%d ",pc->data);
+		pc=pc->next;
+	}
+} 

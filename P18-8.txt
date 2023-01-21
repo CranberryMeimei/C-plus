@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h> 
+typedef struct LNode
+{
+	int data;
+    struct LNode *next; 
+}LNode,*LinkList;
+
+LinkList Createlist (int n);
+LinkList DeleteMinMax(LinkList L,float min,float max);
+ void Printlist(LNode *Lc);
+int main()
+{
+	int a;
+	float max,min;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	printf("min:");
+	scanf("%f",&min);
+	printf("max:");
+	scanf("%f",&max);
+	LinkList L=DeleteMinMax(La,min,max);
+	Printlist(L);
+} 
+//后插法 创建链表（集合）
+LinkList Createlist (int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		p->next=NULL;
+		scanf("%d",&p->data);
+		
+		r->next=p;
+		r=p;		
+	}
+	return L; 
+ }
+LinkList DeleteMinMax(LinkList L,float min,float max)
+ {
+ 	LinkList p=L->next;
+ 	LinkList pre=L;
+ 	while(p->data<=min)
+	{
+		pre=pre->next;
+ 		p=p->next;
+	}//p>min
+	LinkList q=p;
+	while(p->data<max)
+	{
+			LinkList r=p;
+			p=p->next;
+ 			free(r);
+	}
+	pre->next=p;
+	return L;
+ }
+  //打印
+void Printlist(LNode *Lc)
+{
+	LinkList pc=Lc->next;
+	while(pc)
+	{
+		printf("%d ",pc->data);
+		pc=pc->next;
+	}
+} 

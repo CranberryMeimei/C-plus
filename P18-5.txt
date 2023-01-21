@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<stdlib.h> 
+typedef struct LNode
+{
+	int data;
+    struct LNode *next; 
+}LNode,*LinkList;
+
+LinkList Createlist (int n);
+LinkList Decompose(LNode *La,LNode *Lb);
+void Printlist(LNode *Lc);
+ 
+ 
+int main()
+{
+	int a;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	LinkList Lb=La;
+	LinkList Lc=Decompose(La,Lb);
+	printf("Lb(<0):");
+	 Printlist(Lb);
+	 printf("\n");
+	 	printf("Lc(>0):");
+	 Printlist(Lc);
+} 
+//后插法 创建链表（集合）
+LinkList Createlist (int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		p->next=NULL;
+		scanf("%d",&p->data);
+		
+		r->next=p;
+		r=p;		
+	}
+	return L; 
+ } 
+ //B<0   C>0
+LinkList Decompose(LNode *La,LNode *Lb)//改进能返回Lb ？？ 
+{
+	 LinkList pb=Lb;
+	 LinkList pa=La->next;//首元结点 
+	 LinkList Lc=(LinkList)malloc(sizeof(LNode));
+	 Lc->next=NULL;	 
+	 LinkList pc=Lc;//
+	 
+	 while(pa)
+	 {
+	 	if(pa->data<0)
+	 	{
+	 		pb->next=pa;
+	 		pa=pa->next;
+	 		pb=pb->next; //更新 
+		}
+		 else
+		 {
+		 	pc->next=pa;
+		  // LinkList q=pa;
+		 	pa=pa->next;
+			//free(q);
+		 	pc=pc->next; //
+		 }
+	 }
+	 pc->next=NULL;
+	 pb->next=NULL;
+	 return Lc;
+} 
+//打印
+void Printlist(LNode *L)
+{
+	LinkList p=L->next;
+
+	while(p)
+	{
+		printf("%d ",p->data);
+		p=p->next;
+	}
+}

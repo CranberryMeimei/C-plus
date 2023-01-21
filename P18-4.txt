@@ -1,0 +1,111 @@
+#include<stdio.h>
+#include<stdlib.h> 
+typedef struct LNode
+{
+	int data;
+    struct LNode *next; 
+}LNode,*LinkList;
+
+LinkList Createlist (int n);
+ LinkList Defference (LNode *La,LNode *Lb);
+int Printlist(LNode *Lc);
+ 
+ 
+int main()
+{
+	int a,b;
+	printf("请输入链表a的数据个数:");
+	scanf("%d",&a);
+	printf("请输入链表a的数据："); 
+	LinkList La=Createlist(a);
+	printf("请输入链表b的数据个数:");
+	scanf("%d",&b);
+	printf("请输入链表b的数据："); 
+	LinkList Lb=Createlist(b);
+	
+	LinkList Lc=Defference(La,Lb);
+	printf("求差集：\n");
+	int n=Printlist(Lc);	
+	printf("个数：");
+	printf("%d",n);
+} 
+//后插法 创建链表（集合）
+LinkList Createlist (int n)
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;
+	int i;
+	for(i=0;i<n;i++)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		p->next=NULL;
+		scanf("%d",&p->data);
+		
+		r->next=p;
+		r=p;		
+	}
+	return L; 
+ } 
+  //求差集
+ LinkList Defference (LNode *La,LNode *Lb)
+ {
+ 	LinkList Lc,pc;
+ 	LinkList pa=La->next;
+ 	LinkList pb=Lb->next;
+ 	Lc=pc=La;
+ 	
+ 	while(pa&&pb)
+ 	{
+ 		if(pa->data<pb->data)
+ 		{
+ 			pc->next=pa;
+ 			pc=pc->next;
+ 			pa=pa->next;
+		}
+		else if(pa->data>pb->data)//a:                  3
+		                       //b:      1     2     3(/6)
+		{
+				LinkList u=pb;
+				pb=pb->next;
+				free(u);
+		}
+		else
+		{
+				LinkList u=pa;
+				pa=pa->next;
+				delete u;
+				
+				LinkList q=pb;
+				pb=pb->next;
+				free(q);
+		}
+	}
+
+	 	 while(pb)
+	 {
+	 	LinkList u=pb;
+	 	pb=pb->next;
+	 	free(u);
+	 }
+	 while(pa)
+	 {
+	 	pc->next=pa;
+	 }
+	 pc->next=NULL;
+	 free(Lb);
+	 return Lc;
+  } 
+  //打印
+int Printlist(LNode *Lc)
+{
+	int n=0;
+	LinkList pc=Lc->next;
+	while(pc)
+	{
+		printf("%d ",pc->data);
+		n++;
+		pc=pc->next;
+	}
+	return n;
+} 
