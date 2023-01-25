@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 20 
+typedef struct 
+{
+	char *base;
+	char *top;
+	int stacksize; 
+}SqStack;
+//创建 栈 
+SqStack InitStack()
+{
+	SqStack S ;
+	S.base=(char *)malloc(sizeof(char)*MAX ); 
+	S.top=S.base;
+	S.stacksize=MAX;
+	return S;
+}
+// 入栈
+/*
+SqStack Push  (SqStack S,char i)
+{
+	
+	*S.top++=i;
+	return S;
+}
+*/
+//出栈
+char Pop (SqStack *S)
+{
+	char e=*--S->top;
+	return e;
+} 
+//
+int InOutS(SqStack S)
+{
+	int n;
+	printf("the number of n:");
+	scanf("%d",&n);
+	int i; 
+	
+	for(i=0;i<n;i++)
+	{
+		printf("No %d:",i+1);
+		int x;
+		scanf("%d",&x);
+		if(x!=-1)
+		{
+			if(*S.top==S.stacksize-1)
+			{
+				printf("Full!");
+				return 0;
+			}
+			else//入栈 
+			*S.top++=x;
+		}
+		else
+		{
+			if(S.top==S.base)
+			{
+				printf("Empty!");
+				return 0;
+			}
+			else
+			{
+				int t=Pop(&S); 
+				printf("pop %d \n",t);
+			}
+		}
+	}
+}
+int main()
+{
+	SqStack S=InitStack();
+	InOutS(S); 
+}

@@ -1,0 +1,137 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define  QElemType int 
+
+typedef struct QNode
+{
+	QElemType data;
+	struct QNode *next;
+}QNode,*QueuePtr;
+
+typedef struct
+{
+	QueuePtr rear;//尾指针 
+	
+}LinkQueue; 
+void EnQueue (LinkQueue *Q);
+void  DeQueue (LinkQueue *Q,QElemType e);
+void Print(LinkQueue *Q);
+int IsEmpty (LinkQueue *Q);
+//创建  （初始化：） 
+LinkQueue InitQueue ( )
+{
+	//初始化 
+	LinkQueue Q ;
+	Q.rear=(QueuePtr )malloc(sizeof (QNode));
+	Q.rear->next=Q.rear; 
+	//创建 
+	int i,n;
+	printf("enter n which is the number of the element:");
+	scanf("%d",&n); 
+	printf("enter a series of data:\n");
+	for(i=0;i<n;i++)
+	{
+		EnQueue (&Q); 
+	} 
+	printf("Enter successfully!\n");
+	return Q;
+}
+
+ 
+//入队
+void EnQueue (LinkQueue *Q)
+{
+	QElemType e;
+	scanf("%d",&e);
+	QueuePtr q=Q->rear;
+	
+	while(q->next!=Q->rear)
+	{
+		q = q->next;
+	}
+	QueuePtr p=(QueuePtr )malloc(sizeof (QNode));//
+	p->data=e;
+	p->next=Q->rear;
+	q->next=p;
+	Print(Q);
+} 
+//出队
+void  DeQueue (LinkQueue *Q)
+{
+	if(IsEmpty(Q))
+	{
+		printf("Empty!");
+		return ;//
+	}
+	QElemType e;
+	
+	QueuePtr p=Q->rear->next;
+	Q->rear->next=p->next;
+	e=p->data;
+	printf("Pop:%d\n",p->data);
+	Print(Q);
+	free(p);
+	
+}
+//判断队列是否为空
+int IsEmpty (LinkQueue *Q)
+{
+	if(Q->rear->next==Q->rear)
+	return 1;
+	else 
+	return 0;
+} 
+//
+//打印队列
+void Print(LinkQueue *Q)
+{
+	QueuePtr p=Q->rear;
+	printf("Queue :");
+	if(IsEmpty (Q))
+	{
+		printf("Empty!\n");
+		return;//
+	}	
+    while (p->next != Q->rear)
+    {
+        printf("%d  ", p->next->data);
+        p = p->next;
+    }
+    printf("\n");
+}
+//菜单
+void Menu(LinkQueue Q)
+{
+	int choice;
+	printf("1.insert\t2.Pop\t3.print\n");
+	scanf("%d",&choice);
+	
+	switch(choice)
+	{
+		case 1:
+			{
+				 QElemType e;
+				 printf("insert :");
+				 EnQueue (&Q);
+				 printf("Enter successfully!\n");
+				 break;
+			}
+		case 2:
+			{
+				DeQueue (&Q);
+				break;
+			}
+		case 3:
+			{
+				Print(&Q);
+			}		
+	}
+	Menu(Q);
+}
+ 
+int main()
+{
+	LinkQueue Q=InitQueue ();
+	Menu(Q);
+	
+}

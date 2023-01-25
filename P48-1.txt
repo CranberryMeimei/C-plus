@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define m  30
+
+typedef struct 
+{
+	int top[2],bot[2];
+	int *V;
+	int M;
+ } DblStack;
+ DblStack InitDblStack () ;
+ void DblPush(DblStack *S);
+ int DblPop (DblStack *S);
+ int IsEmpty (DblStack *S);
+ int IsFull (DblStack *S);
+ void Print(DblStack *S);
+void Menu(DblStack S);
+int main()
+{
+	DblStack S=InitDblStack ();
+	Menu(S);
+}
+//初始化一个大小为m的双向栈s
+DblStack InitDblStack () 
+{
+	
+	DblStack S;
+	S.V=(int *)malloc (m*sizeof(int));
+	S.bot[0]=-1;
+	S.bot[1]=m;
+	S.top[0]=-1;
+	S.top[1]=m;
+	S.M=m;
+	return S;
+} 
+//向指定的  i 号栈中 插入 元素x 
+void DblPush(DblStack *S)
+{
+	//if(S.top[1]-S.top[0]==1)
+//	return ERROR;
+	int i,x;
+    printf("number of stack:");
+    scanf("%d",&i);
+    printf("insert x:");
+    scanf("%d",&x);
+    
+	if(i==0)
+	S->V[++S->top[0]]=x;
+	else 
+	S->V[--S->top[1]]=x;
+	
+}
+//删除 指定的 i号栈的栈顶元素，用x返回其值
+int DblPop (DblStack *S)
+{
+	int i,x;
+    printf("number of stack:");
+    scanf("%d",&i);
+    
+	//if(S->top[1]-S->top[0]==1)
+	//return Error;
+	if(i==0)
+		x=S->V[S->top[0]--];
+	else 
+	    x=S->V[S->top[1]++];
+	    return x; 
+ } 
+ //判断指定的 i号栈是否为空，空返回1，否则返回0 
+int IsEmpty (DblStack *S)
+{
+	int i,x;
+    printf("number of stack:");
+    scanf("%d",&i);
+    
+	return S->top[i]==S->bot[i];
+}
+//判断栈是否满，满返回1，否则返回0 
+int IsFull (DblStack *S)
+{
+	if(S->top[1]-S->top[0]==1)
+	return 1;
+	else
+	return 0;
+}
+//打印 
+void Print(DblStack *S)
+{
+	int i,j;
+	printf("number of stack:");
+    scanf("%d",&i);
+    
+    if(i==0)
+    for (j=0;j<=S->V[S->top[0]];j++)
+    	printf("%d ",S->V[j]);
+    else if(i==1)
+    for (j=m-1;j>=S->V[S->top[1]];j--)
+    	printf("%d ",S->V[j]);
+	
+ } 
+//菜单
+void Menu(DblStack S)
+{
+	int item;
+	printf("\n choice:\n");
+	printf("1.插入信息\t2.删除信息\n3.栈是否满\t4.i号栈是否满\n");
+	scanf("%d",&item);
+	switch(item)
+	{
+		case 1:
+    	{
+		 	DblPush(&S);
+		 	printf("Entry successful!");
+		 	printf("Here:\n");
+		 	Print(&S);
+		 	Menu(S);
+		 	break;
+		}
+		case 2:
+			{
+				
+				int x=DblPop (&S);
+				printf("pop x=%d\n",x);
+				
+				printf("Delete successful!");
+		 		printf("Here:\n");
+		 		Print(&S);
+		 		Menu(S);
+		 		break;
+			}
+			case 3:
+				{
+					int n=IsFull ( &S);	
+					if(n==1)
+					printf("YES");
+					else if(n==0)
+					printf("NO");
+					else
+					printf("ERROR!");
+					Menu(S);
+					break;
+				}
+				case 4:
+					{
+						int t=IsEmpty (&S);
+						if(t==1)
+						printf("YES");
+						else if(t==0)
+						printf("NO");
+						else
+						printf("ERROR!");
+						Menu(S);
+						break;
+					}
+					default :
+						printf("ERROR!\n");
+						Menu(S);
+	}
+ } 

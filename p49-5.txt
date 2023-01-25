@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> 
+
+//
+bool Judge( char a[])
+{
+	int j=0;
+	int i=0,o=0;
+	while(a[j]!='\0')
+	{
+		switch(a[j])
+		{
+			case 'I':
+				i++;
+				break;
+			case 'O':
+				o++;
+		if(i<o)
+		{
+			printf("ERROR!\n");
+			return false;
+		}
+		}
+		j++;
+	}
+	if(i!=o)
+	{
+		printf("ERROR!\n");
+		return false;
+	}else
+	{
+		printf("RIGHT!\n");
+		return true;
+	}
+	
+}
+int main()
+{
+	printf("String (only 'I'&'O'):");
+	char a[20];
+	scanf("%s",a);
+	bool m=Judge(a);
+	printf("%d",m); 
+}

@@ -1,0 +1,137 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define m 10
+#define  QElemType int
+typedef struct 
+{
+	QElemType *base;
+	int front,rear;
+	
+}SqQueue;
+//初始化 
+SqQueue InitQueue ()
+{
+	SqQueue Q;
+	Q.base=(QElemType *)malloc(sizeof(QElemType)*m);
+	Q.front=Q.rear=0;
+
+	return Q;
+}
+//在队 头 插入元素e 
+void 	PushFront (SqQueue *Q ,QElemType e)
+{
+	if(Q->front==(Q->rear+1)%m)
+	//return ERROR;
+	{//队满 
+		printf("ERROR!\n");
+		return;
+	}
+	Q->front=(Q->front-1+m)%m;/////!!!!
+	Q->base[Q->front]=e;
+//	printf("e=%d",Q->base[Q->front]);
+	printf("OK!\n");
+//	return OK;
+} 
+//删除Q的队尾元素
+void PopRear (SqQueue *Q)
+{
+	if(Q->rear==Q->front)///////
+	{	//return ERROR;
+	//队空 
+		printf("Empty!\n");
+		return;
+	}
+	Q->rear=(Q->rear-1+m)%m;	
+	QElemType e =Q->base[Q->rear];
+	printf("Pop: %d \n",e);
+	
+		
+//	return OK; 
+}
+
+//队列长度
+int Length (SqQueue *Q)
+{
+//	if(Q->front==(Q->rear+1)%m)
+//	return m;
+	return (Q->rear-Q->front+m)%m;
+} 
+
+//打印
+void Print(SqQueue *Q)
+{
+	int front=Q->front;//为什么一定要设front变量代替Q->[front] ????
+	printf("Queue:");
+	while(front!=Q->rear)
+	{
+		printf("%d ",Q->base[front]);
+		front=(front+1)%m;
+	}
+	printf("\n");
+} 
+
+/*
+ //打印 (也可以)
+void Print(SqQueue *Q)
+{
+	int i;
+	int length =Length (Q);///
+//	printf("len=%d\n",length);
+	if(length==0)
+     {
+		 printf("Empty!\n");
+     	 return;
+	 }
+	 printf("Queue:");
+	 length =Length (Q);/////////
+	 ////???
+	for(i=Q->front;i<Q->front+length;i++)
+	{
+		
+		printf("%d ",Q->base[i]);		
+	}
+     printf("\n");
+} 
+*/
+ //菜单 
+void Menu(SqQueue Q)
+{
+	printf("1.InsertElem\t2.DeleteElem\t3.Length\n");
+	int choice;
+	printf("choice:");
+	scanf("%d",&choice);
+	
+	switch(choice)
+	{
+		case 1:
+			{
+				QElemType e;
+				printf("insert: ");
+				scanf("%d",&e);
+				PushFront (&Q , e);
+				 //print
+				 Print(&Q);
+				 break;
+			}
+		case 2:
+			{
+				PopRear(&Q);
+				//print
+				 Print(&Q);
+				 break;
+			}
+			case 3:
+			{
+				int l=Length (&Q);
+				printf("Length: %d\n",l);
+				break;
+			}
+	}
+		Menu(Q);
+}
+
+ int main()
+ {
+ 	SqQueue Q=InitQueue ();
+ 	Menu(Q);
+ }

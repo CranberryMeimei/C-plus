@@ -1,0 +1,128 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct LNode 
+{
+	int data;
+	struct LNode *next;
+}LNode,*LinkList;
+
+
+void Printlist(LinkList L);
+//后插法 创建单链表a,b
+LinkList Createlist()
+{
+	LinkList L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	LinkList r=L;//
+	int i;
+	int e=1;
+	printf("(digits until 00):\n");
+	while(e)
+	{
+		LinkList p=(LinkList)malloc(sizeof(LNode));
+		scanf("%d",&e);
+		if(e==00)
+		break;
+		
+		p->data=e;
+		p->next=NULL;
+		
+		r->next=p;
+		r=p;
+	}
+	return L;
+}
+//获取最大值 
+int GetMax(LinkList L)
+{
+
+	int max; 
+	if(L->next==NULL)
+	return L->data;
+	else
+	{
+		max=GetMax(L->next);
+		return L->data>=max?L->data:max;
+	}
+}
+//求链表结点个数
+int GetLength (LinkList L)
+{
+
+	if(L->next==NULL)
+	return 1;
+	else
+	{
+		return GetLength(L->next)+1;
+	}
+}
+//求平均值 
+double GetAverage (LinkList L,int n)
+{
+
+	double ave ;
+	if(L->next==NULL)
+	return L->data;
+	else
+	{
+		 ave =GetAverage(L->next,n-1);
+		return (ave*(n-1)+L->data)/n;
+	} 
+}
+//打印
+void Printlist(LinkList p)
+{
+	;
+	while(p)
+	{
+		printf("%d ",p->data);
+		p=p->next;
+	}
+	printf("\n");
+} 
+//菜单
+void Menu (LinkList L)
+{
+	int choice;
+	
+	printf("1.GetMax\t2.GetLength\n3.GetAverage\t4.Printlist\n");
+	
+	printf("choice:");
+	scanf("%d",&choice );
+	switch(choice)
+	{
+		case 1:
+			{
+
+				int max=GetMax( L);
+				printf("MAX=%d\n",max);
+				break;
+			}
+		case 2:
+			{
+					int len=GetLength (L);
+					printf("length=%d\n",len);
+					break;
+			}
+		case 3:
+			{
+				int n;
+				int len=GetLength (L);
+				double ave =GetAverage (L,len);
+				printf("ave = %lf \n",ave);
+				break;
+			}
+		case 4:
+			{
+					Printlist(L);
+			}
+	}
+	Menu(L);
+} 
+int main()
+{
+	printf("enter a series of data"); 
+	LinkList La=Createlist();
+	Menu(La->next);///////因为有头结点 
+}

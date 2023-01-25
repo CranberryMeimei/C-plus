@@ -1,0 +1,126 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define m 10
+#define  QElemType int
+typedef struct 
+{
+	QElemType *base;
+	int front,rear,tag;
+	
+}SqQueue;
+//初始化 
+SqQueue InitQueue ()
+{
+	SqQueue Q;
+	Q.base=(QElemType *)malloc(sizeof(QElemType)*m);
+	Q.front=Q.rear=0;
+	Q.tag=0;
+	return Q;
+}
+//插入元素e在队尾 
+void EnQueue (SqQueue *Q ,QElemType e)
+{
+	if(Q->tag)
+	//return ERROR;
+	{
+		printf("ERROR!\n");
+		return;
+	}
+	Q->base[Q->rear]=e;
+	Q->rear=(Q->rear+1)%m;
+	
+	if(Q->front==Q->rear) 
+	Q->tag=1;
+	
+	printf("OK!\n");
+//	return OK;
+} 
+//删除Q的队头元素
+void DeQueue (SqQueue *Q)
+{
+	if((Q->tag==0)&&(Q->rear==Q->front))///////
+	{	//return ERROR;
+		printf("Empty!\n");
+		return;
+	}
+		
+	QElemType e =Q->base[Q->front];
+	Q->front=(Q->front+1)%m;
+	
+	if(Q->front==Q->rear)
+	Q->tag=0;
+	
+	printf("OK!\n");
+		
+//	return OK; 
+} 
+//队列长度
+int Length (SqQueue *Q)
+{
+	if(Q->tag==1)
+	return m;
+	return (Q->rear-Q->front+m)%m;
+ } 
+ //打印
+void Print(SqQueue *Q)
+{
+	int i;
+	int length =Length (Q);///
+//	printf("len=%d\n",length);
+	if(length==0)
+     {
+	//	 printf("Empty!\n");
+     	 return;
+	 }
+	 printf("Queue:");
+	 length =Length (Q);/////////
+	 ////???
+	for(i=Q->front;i<length+Q->front;i++)
+	{
+		
+		printf("%d ",Q->base[i]);		
+	}
+     printf("\n");
+} 
+ //菜单 
+void Menu(SqQueue Q)
+{
+	printf("1.InsertElem\t2.DeleteElem\t3.Length\n");
+	int choice;
+	printf("choice:");
+	scanf("%d",&choice);
+	
+	switch(choice)
+	{
+		case 1:
+			{
+				QElemType e;
+				printf("insert: ");
+				scanf("%d",&e);
+				 EnQueue (&Q , e);
+				 //print
+				 Print(&Q);
+				 break;
+			}
+		case 2:
+			{
+				DeQueue (&Q);
+				//print
+				 Print(&Q);
+				 break;
+			}
+		case 3:
+			{
+				int l=Length (&Q);
+				printf("Length: %d\n",l);
+				break;
+			}
+	}
+		Menu(Q);
+}
+
+ int main()
+ {
+ 	SqQueue Q=InitQueue ();
+ 	Menu(Q);
+ }

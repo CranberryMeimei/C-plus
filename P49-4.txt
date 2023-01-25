@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 20 
+typedef struct 
+{
+	float *base;
+	float *top;
+	int stacksize; 
+}SqStack;
+
+
+//创建 栈 
+SqStack InitStack()
+{
+	SqStack S ;
+	S.base=(float *)malloc(sizeof(float)*MAX ); 
+	S.top=S.base;
+	S.stacksize=MAX;
+	return S;
+}
+// 入栈
+SqStack* Push  (SqStack *S,float i)//
+{
+	
+	*S->top++=i;//////
+//	*(S->top)=i;
+//	 S->top++;
+//?????	printf("\n  %f\n",*S->base);///
+	return S;
+}
+//出栈
+float Pop (SqStack *S,float e)
+{
+	 e=*--S->top;/////
+	return e;
+} 
+//
+float Postfix()
+{
+	SqStack S =InitStack();//
+	float num=0.0;
+	printf("enter the expression:(until '$')\n");
+	char ch=getchar();
+	char data[30]={'0'};///////
+	while(ch!='$')
+	{
+	    int	i=0;
+	//	char data[30];
+	
+		while((ch>='0'&&ch<='9')||ch=='.')
+		{//拼数 
+			data[i]=ch;
+			i++;
+			ch=getchar();
+		}
+		data[i]='\0';/////
+		//    '\0'????
+	//	printf("%s@\n",data);
+		num=atof(data);
+	//	printf("%f#\n",num);
+		Push(&S,num);
+		switch(ch)
+		{
+			case ' ':break;
+			case '+':
+				{
+					float a=Pop(&S,a);
+					float b=Pop(&S,b);
+				//	printf("%f %f\n",a,b);//
+					Push (&S,a+b);
+					break;
+				}
+				case '-':
+				{
+					float a=Pop(&S,a);
+					float b=Pop(&S,b);
+					Push (&S,a-b);
+					break;
+				}
+				case '*':
+				{
+					float a=Pop(&S,a);
+					float b=Pop(&S,b);
+					Push (&S,a*b);
+				//	printf("%f %f\n",a,b);//
+					break;
+				}
+				case '/':
+				{
+					float a=Pop(&S,a);
+					float b=Pop(&S,b);
+					Push (&S,a/b);
+					break;
+				}
+				
+		}
+		ch=getchar();
+	}
+	return *S.base; ////
+}
+int main()
+{
+	float num=Postfix();
+	printf("%f",num);
+}
