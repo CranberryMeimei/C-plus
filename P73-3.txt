@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void Insert (char *s,char *t, int pos)
+{
+	char *p=s;
+	char *q=t;
+	
+	if( pos<1 )
+	{
+		printf("the pos is illegal!\n");
+		return;
+		//exit(0);???
+	}
+	int i=0;
+	while (*p!='\0' && i < pos )
+	{
+		p++;
+		i++;
+	}
+	if(*p=='\0')
+	{
+		printf("the pos is over !\n");
+		return;
+		//exit(0);???
+	}
+	else //i=pos
+	{
+		while( *p!='\0')//查到串尾时，i为字符'\0'的下标，p指向'\0' 
+		{
+			p++;
+			i++;
+		}
+	}
+	int x=0;// 1 2 0
+	while ( *q!='\0' )
+	{
+		q++;
+		x++;
+	}
+	int j;
+	for(j=i ; j>=pos ; j--)
+	{
+		*( p + x ) =*p;///?
+		p--;
+	}
+	q--;
+	p=p+x;
+	for( j = 1; j<=x ; j++)
+	{
+		 *p--=*q--;
+	}
+	
+} 
+int main()
+{
+
+	 char s[35]="I LOVE & MEIMEI ";
+	 char t[15]=" YAYA ";
+	 Insert (s,t, 6);
+	 printf("%s",s);
+}

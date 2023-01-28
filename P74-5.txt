@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define  m 3
+#define  n 3
+//有疑问 ：书中参考代码不行 
+void Isequal (int a[m][n] )
+{
+
+	int i,j,p,k;
+	for( i=0 ;i<m ;i++)
+	{
+		for(j=0 ;j<n-1;j++)//
+		{	
+			for(p=j+1; p<n;p++)
+				if(a[i][j]==a[i][p])
+				{
+					printf("1no!\n");
+					return;
+				}
+		}
+		for( k=i+1; k<m;k++)
+			for(p=0;p<n;p++)
+				if(a[i][j]==a[k][p])
+					{
+						printf("2no!\n");
+						return;
+					}
+	}
+    
+	printf("yes!\n");
+}
+int main ()
+{
+
+	int a[3][3]={   0,1,3,2,3,70,10,37,5  };
+	Isequal( a);
+}

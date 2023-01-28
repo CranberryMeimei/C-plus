@@ -1,0 +1,24 @@
+#include <stdio.h>
+//	int i=0;
+void Inverse(char a[])
+{
+	static	int i=0;//注意理解
+	 
+	char ch;
+	ch=getchar();
+	if(ch=='\n')
+	return;
+	else
+	{
+		Inverse(a);
+		a[i++]=ch;
+	}
+	a[i]='\0';
+}
+
+int main()
+{
+	char a[10];
+	Inverse(a);
+	printf("%s",a);
+} 

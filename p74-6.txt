@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void Partition (int A[] , int n)
+{
+	int low=0;
+	int high=n-1;
+	int t;
+	while(low<high)
+	{
+		while(low<high&&A[low]>0)
+		low++;
+		while(low<high && A[high]<0)
+		high--;
+		if(low<high)
+		{
+			t=A[low];
+			A[low++]=A[high];
+			A[high--]=t;
+		}
+	}
+ } 
+ int main()
+ {
+ 	int i,n=6;
+ 	int A[6]={1,-1,5,0,-3,2};
+ 	Partition (A , n);
+ 	for(i=0;i<n;i++)
+ 	printf("%d ",A[i]);
+ }

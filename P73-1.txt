@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//统计输入字符串中数字字符和字母字符的个数 
+void Count ()
+{
+	int i;
+	int num [36];
+	for(i=0;i<36;i++)
+	{//初始化 
+	 	num[i] =0;	
+	}
+	char ch;
+	while((ch=getchar())!='\n')
+	{
+		if('0'<=ch<='9')
+		{
+			i=ch-48;
+			num[i]++;
+		}
+		else if('A'<=ch<='Z')
+		{
+			i=ch-65+10;
+			num[i]++;
+		}
+	}
+	for(i=0;i<10;i++)
+	printf("The number of the number %d is %d\n",i,num[i]);
+	for(i=10;i<36;i++)
+	{
+		ch =i+55;
+		printf("The number of letters %c is %d\n",ch,num[i]);
+	}
+}
+int main()
+{
+	Count ();
+} 
