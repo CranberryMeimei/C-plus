@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <stdlib.h> //NULL
+//Binary Search Tree ( BST )   二叉 搜索 树 
+//     根 > 左     根 < 右
+typedef struct node 
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}Node;
+
+
+typedef struct //
+{
+	Node* root;
+}Tree;
+
+//假设数据 没有重复 
+//     根 > 左     根 < 右（比较  大  小） 
+void insert (Tree* tree ,int value)
+{
+	Node* node = (Node *)malloc (sizeof(Node));
+	node->data = value;
+	node->left = NULL;
+	node->right = NULL;
+	
+	if(tree->root==NULL)
+	{
+		tree->root=node;
+	}
+	else
+	{
+		Node* temp = tree->root;//当前跟指向value的结点作比较 
+		while(temp!=NULL)
+		{
+			if(value < temp->data)
+			{
+				if(temp->left==NULL)
+				{
+					temp->left = node ;
+					return;
+				}else
+				{
+					temp=temp->left;
+				}
+			}
+			else
+			{
+				if(temp->right==NULL)
+				{
+					temp->right = node ;
+					return;
+				}else
+				{
+					temp=temp->right;
+				}
+			}
+		} 
+	}
+	
+}
+
+void preorder(Node* node) 
+{
+	if(node != NULL)
+	{
+	
+		printf("%d ",node->data);   //先序：根->左->右 
+		preorder(node->left); 
+		preorder(node->right);
+	}
+}
+
+void inorder(Node* node) //中序 
+{
+	if(node != NULL)
+	{
+		inorder(node->left); 
+		printf("%d ",node->data);  
+		inorder(node->right);
+	}
+}
+void postorder(Node* node) //后序
+{
+	if(node != NULL)
+	{
+		postorder(node->left); 
+		postorder(node->right);
+		printf("%d ",node->data);  
+	}
+}
+
+//求最大值 
+int get_maximum(Node* node)
+{
+	if(node==NULL)//出口 
+	return -1;
+	else
+	{
+		int n1 = get_maximum(node->left);
+		int n2 = get_maximum(node->right);
+		int n3 = node->data;
+		int max = n1;
+		if(n2>max) max=n2;
+		if(n3>max) max=n3;
+		return max;
+	} 
+}
+//求树的高度
+int get_height(Node* node)
+{
+	if(node == NULL)//出口 
+	{
+		return 0;
+	}
+	else
+	{
+		int left_h = get_height(node->left);
+		int right_h = get_height(node->right);
+	//	int max=(left_h>right_h)?left_h:right_h;
+		int max = left_h;
+		if(right_h >max )
+		{
+			max=right_h;
+		//	return (max+1);
+		}	
+		return (max+1);
+	}
+}
+
+
+ int main() 
+{
+ 	int arr[7]= { 6,3,8,2,5,1,7};
+ 	Tree tree;
+ 	tree.root = NULL;
+	 
+	 int i;
+	for( i=0; i<7;i++)//重点 
+	{
+	  	insert(&tree , arr[i]);
+	}
+	//看一棵树是否完整： 看 先序 & 中序 
+ //	preorder(tree.root);
+ 	printf("\n");
+ //	inorder(tree.root);//中序遍历(性质)：  从小 到 大 
+ 	int h = get_height(tree.root);
+ 	printf("h = %d\n",h);
+ 	
+ 	int m= get_maximum(tree.root);
+ 	printf("m = %d\n",m);
+} 

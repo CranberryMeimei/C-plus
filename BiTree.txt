@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h> //NULL
+#define ElemType char
+
+//二叉链表 
+typedef struct BiTNode 
+{
+	ElemType data;
+	struct BiTNode* lchild;
+	struct BiTNode* rchild;
+}BiTNode,*BiTree;
+
+//二叉树的建立(要求用户按照  先序  遍历的方式输入数据)
+void CreateBiTree(BiTree *T)// ? T是一个二级指针 
+{
+	char c;
+	scanf("%c",&c);
+	
+	if('#' ==c)
+	{
+		*T =NULL;
+	}
+	else//递归 
+	{
+		*T = (BiTNode *)malloc(sizeof(BiTNode));
+		(*T)->data =c;
+		CreateBiTree(&(*T)->lchild);//？ 
+		CreateBiTree(&(*T)->rchild);
+	}
+} 
+//访问二叉树 
+void visit( char c ,int level)
+{
+	printf("%c 位于第 %d 层\n",c,level);
+}
+//遍历二叉树（） 
+void preorder(BiTree T ,int level) 
+{
+	if( T )
+	{
+	
+		visit(T->data,level);   //先序：根->左->右 
+		preorder(T->lchild,level+1); 
+		preorder(T->rchild,level+1);
+	}
+} 
+
+ int main()
+ {
+ 	int level =1;
+ 	BiTree T =NULL;//?
+	 
+	CreateBiTree(&T);//?
+	preorder( T ,level) ;
+ }
+ 

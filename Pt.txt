@@ -1,0 +1,17 @@
+//树的双亲表示法结点结构定义
+#define max__tree_size 100
+#define   ElemType   int
+
+typedef struct PTNode 
+{
+	ElemType data;  //节点数据 
+	int parent;      //双亲位置 
+}PTNode;
+
+
+typedef struct //
+{
+	PTNode nodes[max__tree_size];
+	int r; //根的位置 
+	int n;//结点数目 
+}PTree;
