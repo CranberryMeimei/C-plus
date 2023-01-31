@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include <stdlib.h> //NULL
+#define ElemType char
+
+//二叉链表 
+typedef struct BiTNode 
+{
+	ElemType data;
+	struct BiTNode* lchild;
+	struct BiTNode* rchild;
+}BiNode,*BiTree;
+//链队
+typedef struct QNode
+{
+	BiTree data;
+	struct QNode *next; 
+} QNode,*QueuePtr;
+
+typedef struct 
+{
+	QueuePtr front;
+	QueuePtr rear;	
+}LinkQueue;
+
+//初始化 链队 
+LinkQueue InitQueue()
+{
+	LinkQueue Q;
+	Q.rear=Q.front=NULL;///?
+	return Q;
+}
+//判空
+bool QueueEmpty (LinkQueue *Q);
+//入队 
+void EnQueue (LinkQueue* Q , BiTree T)
+{
+	QueuePtr s= (QueuePtr )malloc(sizeof(QNode));
+	if(s==NULL)
+	printf("false!\n");
+	s->data = T;
+	s->next = NULL;
+
+	if( Q->front==NULL)
+	{
+		Q->rear = Q->front = s;	
+
+	}
+	else 
+	{
+		Q->rear->next = s;
+		Q->rear = s;
+
+	}
+
+}
+//判空
+bool QueueEmpty (LinkQueue *Q)
+{
+	return (Q->front==NULL);
+ } 
+ //出队
+BiTree PopQueue ( LinkQueue* Q  )
+{
+	BiTree x; 
+	
+ 	if(Q->front==NULL) return 0;
+	QueuePtr p = Q->front;
+	x = p->data ;
+	Q->front = p->next;
+	if(Q->rear == p ) 
+	Q->front = Q->rear =NULL;
+	free(p);
+	return x;
+} 
+//创建线索二叉树  要求用户 先序遍历输入数据
+BiTree CreateBiTree()
+{
+	BiTree T;////
+	char c;
+	scanf("%c",&c);
+	
+	if('#' ==c)
+	{
+		T =NULL;
+	}
+	else//递归 
+	{
+		T = (BiTree)malloc(sizeof(BiNode));
+		T->data =c;
+	
+		T->lchild = CreateBiTree();// 
+		T->rchild= CreateBiTree();
+	}
+	return T;
+} 
+//访问二叉树 
+void visit( BiTree p )
+{
+	printf("%c\t",p->data);
+}
+ 
+//层次遍历 
+int Level (BiTree T)
+{
+	int num = 0 ;
+	if(T)
+	{
+		BiTree p;
+		LinkQueue Q = InitQueue ();
+		EnQueue(&Q,T);
+
+		while(!QueueEmpty(&Q)) //一定要取地址 
+		{
+			p=PopQueue(&Q);
+			visit(p);//
+			if(p->lchild != NULL && p->rchild==NULL|| p->rchild!=NULL&& p->lchild==NULL)
+			num++;
+			if(p->lchild  )
+			EnQueue(&Q,p->lchild);
+			if(p->rchild  )
+			EnQueue(&Q,p->rchild);
+		}
+	}
+	return num;
+} 
+ int main()
+ {		
+ 	printf("请按 先序 顺序输入节点值，输入‘#’代表节点为空：\n");
+    BiTree root = CreateBiTree();
+    printf("\n");
+
+    int num = Level ( root );
+    printf("num = %d ",num);
+ }
